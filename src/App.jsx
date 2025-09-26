@@ -11,6 +11,7 @@ import Dashboard from "@/components/pages/Dashboard";
 import Contacts from "@/components/pages/Contacts";
 import Deals from "@/components/pages/Deals";
 import Companies from "@/components/pages/Companies";
+import Quotes from "@/components/pages/Quotes";
 import ResetPassword from '@/components/pages/ResetPassword';
 import PromptPassword from '@/components/pages/PromptPassword';
 
@@ -127,7 +128,8 @@ function AppContent() {
         <Route path="/reset-password/:appId/:fields" element={<ResetPassword />} />
         <Route path="/" element={<Dashboard />} />
         <Route path="/contacts" element={<Contacts />} />
-        <Route path="/deals" element={<Deals />} />
+<Route path="/deals" element={<Deals />} />
+        <Route path="/quotes" element={<Quotes />} />
         <Route path="/companies" element={<Companies />} />
       </Routes>
       
