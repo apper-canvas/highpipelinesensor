@@ -1,0 +1,272 @@
+import { useState, useEffect } from "react";
+import ApperIcon from "@/components/ApperIcon";
+import Button from "@/components/atoms/Button";
+import FormField from "@/components/molecules/FormField";
+import { dealService } from "@/services/api/dealService";
+import { contactService } from "@/services/api/contactService";
+import { companyService } from "@/services/api/companyService";
+import { toast } from "react-toastify";
+
+const DealModal = ({ deal, onClose, onSave }) => {
+    const [formData, setFormData] = useState({
+        title: "",
+        value: "",
+        stage: "qualified",
+        probability: "",
+        closeDate: "",
+        contactId: "",
+        companyId: "",
+        notes: ""
+    });
+    const [contacts, setContacts] = useState([]);
+    const [companies, setCompanies] = useState([]);
+    const [loading, setLoading] = useState(false);
+    const [errors, setErrors] = useState({});
+
+    const stages = [
+        { value: "qualified", label: "Qualified" },
+        { value: "proposal", label: "Proposal" },
+        { value: "negotiation", label: "Negotiation" },
+        { value: "won", label: "Won" },
+        { value: "lost", label: "Lost" }
+    ];
+
+    useEffect(() => {
+        loadData();
+        if (deal) {
+            setFormData({
+                title: deal.title || "",
+                value: deal.value?.toString() || "",
+                stage: deal.stage || "qualified",
+                probability: deal.probability?.toString() || "",
+                closeDate: deal.closeDate ? new Date(deal.closeDate).toISOString().split('T')[0] : "",
+                contactId: deal.contactId?.toString() || "",
+                companyId: deal.companyId?.toString() || "",
+                notes: deal.notes || ""
+            });
+        }
+    }, [deal]);
+
+    const loadData = async () => {
+        try {
+            const [contactsData, companiesData] = await Promise.all([
+                contactService.getAll(),
+                companyService.getAll()
+            ]);
+            setContacts(contactsData);
+            setCompanies(companiesData);
+        } catch (err) {
+            toast.error("Failed to load data");
+        }
+    };
+
+    const validate = () => {
+        const newErrors = {};
+        if (!formData.title.trim()) newErrors.title = "Title is required";
+        if (!formData.value || formData.value <= 0) newErrors.value = "Value must be greater than 0";
+        if (!formData.closeDate) newErrors.closeDate = "Close date is required";
+        if (!formData.contactId) newErrors.contactId = "Contact is required";
+        if (!formData.probability || formData.probability < 0 || formData.probability > 100) {
+            newErrors.probability = "Probability must be between 0 and 100";
+        }
+        
+        setErrors(newErrors);
+        return Object.keys(newErrors).length === 0;
+    };
+
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        if (!validate()) return;
+
+        try {
+            setLoading(true);
+            const dealData = {
+                ...formData,
+                value: parseFloat(formData.value),
+                probability: parseInt(formData.probability),
+                contactId: formData.contactId,
+                companyId: formData.companyId || null
+            };
+
+            if (deal) {
+                await dealService.update(deal.Id, dealData);
+                toast.success("Deal updated successfully");
+            } else {
+                await dealService.create(dealData);
+                toast.success("Deal created successfully");
+            }
+            onSave();
+            onClose();
+        } catch (err) {
+            toast.error("Failed to save deal");
+        } finally {
+            setLoading(false);
+        }
+    };
+
+    const handleChange = (e) => {
+        const { name, value } = e.target;
+        setFormData(prev => ({ ...prev, [name]: value }));
+        if (errors[name]) {
+            setErrors(prev => ({ ...prev, [name]: "" }));
+        }
+    };
+
+    return (
+        <div className="fixed inset-0 z-50 overflow-y-auto">
+            <div className="flex items-center justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
+                <div className="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" onClick={onClose}></div>
+
+                <div className="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full">
+                    <div className="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
+                        <div className="flex items-center justify-between mb-6">
+                            <h3 className="text-lg font-semibold text-gray-900">
+                                {deal ? "Edit Deal" : "Add New Deal"}
+                            </h3>
+                            <Button variant="ghost" size="sm" onClick={onClose}>
+                                <ApperIcon name="X" className="w-5 h-5" />
+                            </Button>
+                        </div>
+
+                        <form onSubmit={handleSubmit} className="space-y-4">
+                            <FormField
+                                label="Deal Title"
+                                name="title"
+                                value={formData.title}
+                                onChange={handleChange}
+                                error={errors.title}
+                                required
+                                placeholder="Enter deal title..."
+                            />
+
+                            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                                <FormField
+                                    label="Deal Value"
+                                    name="value"
+                                    type="number"
+                                    value={formData.value}
+                                    onChange={handleChange}
+                                    error={errors.value}
+                                    required
+                                    placeholder="0.00"
+                                    min="0"
+                                    step="0.01"
+                                />
+                                <FormField
+                                    label="Probability (%)"
+                                    name="probability"
+                                    type="number"
+                                    value={formData.probability}
+                                    onChange={handleChange}
+                                    error={errors.probability}
+                                    required
+                                    placeholder="0-100"
+                                    min="0"
+                                    max="100"
+                                />
+                            </div>
+
+                            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                                <div>
+                                    <label className="block text-sm font-medium text-gray-700 mb-1">
+                                        Stage <span className="text-red-500">*</span>
+                                    </label>
+                                    <select
+                                        name="stage"
+                                        value={formData.stage}
+                                        onChange={handleChange}
+                                        className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-colors duration-200"
+                                    >
+                                        {stages.map(stage => (
+                                            <option key={stage.value} value={stage.value}>
+                                                {stage.label}
+                                            </option>
+                                        ))}
+                                    </select>
+                                </div>
+                                <FormField
+                                    label="Close Date"
+                                    name="closeDate"
+                                    type="date"
+                                    value={formData.closeDate}
+                                    onChange={handleChange}
+                                    error={errors.closeDate}
+                                    required
+                                />
+                            </div>
+
+                            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                                <div>
+                                    <label className="block text-sm font-medium text-gray-700 mb-1">
+                                        Contact <span className="text-red-500">*</span>
+                                    </label>
+                                    <select
+                                        name="contactId"
+                                        value={formData.contactId}
+                                        onChange={handleChange}
+                                        className={`w-full px-3 py-2 border rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-colors duration-200 ${
+                                            errors.contactId ? 'border-red-500' : 'border-gray-300'
+                                        }`}
+                                    >
+                                        <option value="">Select contact...</option>
+                                        {contacts.map(contact => (
+                                            <option key={contact.Id} value={contact.Id}>
+                                                {contact.firstName} {contact.lastName}
+                                            </option>
+                                        ))}
+                                    </select>
+                                    {errors.contactId && (
+                                        <p className="mt-1 text-sm text-red-600">{errors.contactId}</p>
+                                    )}
+                                </div>
+                                <div>
+                                    <label className="block text-sm font-medium text-gray-700 mb-1">
+                                        Company
+                                    </label>
+                                    <select
+                                        name="companyId"
+                                        value={formData.companyId}
+                                        onChange={handleChange}
+                                        className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-colors duration-200"
+                                    >
+                                        <option value="">Select company...</option>
+                                        {companies.map(company => (
+                                            <option key={company.Id} value={company.Id}>
+                                                {company.name}
+                                            </option>
+                                        ))}
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div>
+                                <label className="block text-sm font-medium text-gray-700 mb-1">
+                                    Notes
+                                </label>
+                                <textarea
+                                    name="notes"
+                                    value={formData.notes}
+                                    onChange={handleChange}
+                                    rows={3}
+                                    className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-colors duration-200"
+                                    placeholder="Add any notes about this deal..."
+                                />
+                            </div>
+
+                            <div className="flex justify-end space-x-3 pt-4">
+                                <Button type="button" variant="outline" onClick={onClose}>
+                                    Cancel
+                                </Button>
+                                <Button type="submit" disabled={loading}>
+                                    {loading ? "Saving..." : deal ? "Update Deal" : "Add Deal"}
+                                </Button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    );
+};
+
+export default DealModal;
