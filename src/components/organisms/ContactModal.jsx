@@ -11,7 +11,6 @@ const ContactModal = ({ contact, onClose, onSave }) => {
 first_name_c: "",
         last_name_c: "",
         email_c: "",
-        phone_c: "",
         company_c: "",
         position_c: "",
         notes_c: ""
@@ -25,7 +24,6 @@ setFormData({
                 first_name_c: contact.first_name_c || "",
                 last_name_c: contact.last_name_c || "",
                 email_c: contact.email_c || "",
-                phone_c: contact.phone_c || "",
                 company_c: contact.company_c || "",
                 position_c: contact.position_c || "",
                 notes_c: contact.notes_c || ""
@@ -120,14 +118,6 @@ label="Email"
                                 required
                             />
 
-                            <FormField
-                                label="Phone"
-name="phone_c"
-                                type="tel"
-                                value={formData.phone_c}
-                                onChange={handleChange}
-                                error={errors.phone_c}
-                            />
                             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                                 <FormField
 label="Company"
