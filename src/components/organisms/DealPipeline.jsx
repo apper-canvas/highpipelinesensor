@@ -73,10 +73,10 @@ return deals.filter(deal => deal.stage_c === stageId);
     if (deals.length === 0) {
         return (
             <Empty
-                icon="Briefcase"
-                title="No deals in pipeline"
-                description="Start tracking your sales opportunities by adding your first deal."
-                actionText="Add Deal"
+icon="Briefcase"
+                title="No items in sales pipeline"
+                description="Start tracking your sales opportunities by adding your first pipeline item."
+                actionText="Add Sales Pipeline Item"
                 onAction={onAddDeal}
             />
         );
@@ -86,12 +86,12 @@ return deals.filter(deal => deal.stage_c === stageId);
         <div className="space-y-6">
             <div className="flex items-center justify-between">
                 <div>
-                    <h2 className="text-lg font-semibold text-gray-900">Sales Pipeline</h2>
-                    <p className="text-sm text-gray-600">{deals.length} active deals</p>
+<h2 className="text-lg font-semibold text-gray-900">Sales Pipeline</h2>
+                    <p className="text-sm text-gray-600">{deals.length} active pipeline items</p>
                 </div>
-                <Button onClick={onAddDeal}>
+<Button onClick={onAddDeal}>
                     <ApperIcon name="Plus" className="w-4 h-4 mr-2" />
-                    Add Deal
+                    Add Sales Pipeline Item
                 </Button>
             </div>
 

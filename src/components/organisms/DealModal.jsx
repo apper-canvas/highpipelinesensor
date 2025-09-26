@@ -121,7 +121,7 @@ if (!formData.title_c.trim()) newErrors.title_c = "Title is required";
                     <div className="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
                         <div className="flex items-center justify-between mb-6">
                             <h3 className="text-lg font-semibold text-gray-900">
-                                {deal ? "Edit Deal" : "Add New Deal"}
+{deal ? "Edit Sales Pipeline Item" : "Add New Sales Pipeline Item"}
                             </h3>
                             <Button variant="ghost" size="sm" onClick={onClose}>
                                 <ApperIcon name="X" className="w-5 h-5" />
@@ -130,8 +130,8 @@ if (!formData.title_c.trim()) newErrors.title_c = "Title is required";
 
                         <form onSubmit={handleSubmit} className="space-y-4">
                             <FormField
-                                label="Deal Title"
-name="title_c"
+label="Pipeline Item Title"
+                                name="title_c"
                                 value={formData.title_c}
                                 onChange={handleChange}
                                 error={errors.title_c}
@@ -141,8 +141,8 @@ name="title_c"
 
                             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                                 <FormField
-                                    label="Deal Value"
-name="value_c"
+label="Pipeline Item Value"
+                                    name="value_c"
                                     type="number"
                                     value={formData.value_c}
                                     onChange={handleChange}
@@ -257,8 +257,8 @@ name="notes_c"
                                 <Button type="button" variant="outline" onClick={onClose}>
                                     Cancel
                                 </Button>
-                                <Button type="submit" disabled={loading}>
-                                    {loading ? "Saving..." : deal ? "Update Deal" : "Add Deal"}
+<Button type="submit" disabled={loading}>
+                                    {loading ? "Saving..." : deal ? "Update Sales Pipeline Item" : "Add Sales Pipeline Item"}
                                 </Button>
                             </div>
                         </form>
