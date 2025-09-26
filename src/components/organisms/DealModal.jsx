@@ -172,7 +172,7 @@ name="probability_c"
                                         Stage <span className="text-red-500">*</span>
                                     </label>
                                     <select
-                                        name="stage"
+name="stage_c"
 value={formData.stage_c}
                                         onChange={handleChange}
                                         className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-colors duration-200"
@@ -201,8 +201,8 @@ label="Close Date"
                                         Contact <span className="text-red-500">*</span>
                                     </label>
                                     <select
-                                        name="contactId"
-value={formData.contact_id_c}
+name="contact_id_c"
+                                        value={formData.contact_id_c}
                                         onChange={handleChange}
                                         className={`w-full px-3 py-2 border rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-colors duration-200 ${
                                             errors.contactId ? 'border-red-500' : 'border-gray-300'
@@ -215,8 +215,8 @@ value={formData.contact_id_c}
                                             </option>
                                         ))}
                                     </select>
-                                    {errors.contactId && (
-                                        <p className="mt-1 text-sm text-red-600">{errors.contactId}</p>
+{errors.contact_id_c && (
+                                        <p className="mt-1 text-sm text-red-600">{errors.contact_id_c}</p>
                                     )}
                                 </div>
                                 <div>
@@ -224,8 +224,8 @@ value={formData.contact_id_c}
                                         Company
                                     </label>
                                     <select
-                                        name="companyId"
-value={formData.company_id_c}
+name="company_id_c"
+                                        value={formData.company_id_c}
                                         onChange={handleChange}
                                         className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-colors duration-200"
                                     >
