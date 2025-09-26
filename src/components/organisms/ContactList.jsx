@@ -33,10 +33,10 @@ const ContactList = ({ searchQuery, onContactSelect, onAddContact }) => {
 
     const filteredContacts = contacts.filter(contact =>
         !searchQuery || 
-        contact.firstName.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        contact.lastName.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        contact.email.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        contact.company.toLowerCase().includes(searchQuery.toLowerCase())
+contact.first_name_c?.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        contact.last_name_c?.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        contact.email_c?.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        contact.company_c?.toLowerCase().includes(searchQuery.toLowerCase())
     );
 
     if (loading) return <Loading />;
@@ -76,36 +76,36 @@ const ContactList = ({ searchQuery, onContactSelect, onAddContact }) => {
                             <div className="flex items-center space-x-4">
                                 <div className="w-12 h-12 bg-gradient-to-br from-primary to-blue-600 rounded-full flex items-center justify-center flex-shrink-0">
                                     <span className="text-white font-medium text-lg">
-                                        {contact.firstName[0]}{contact.lastName[0]}
+{contact.first_name_c?.[0]}{contact.last_name_c?.[0]}
                                     </span>
                                 </div>
                                 <div className="flex-1 min-w-0">
                                     <div className="flex items-center space-x-3 mb-1">
                                         <p className="text-lg font-semibold text-gray-900 truncate">
-                                            {contact.firstName} {contact.lastName}
+{contact.first_name_c} {contact.last_name_c}
                                         </p>
                                         <Badge variant="secondary">
-                                            {contact.position}
+{contact.position_c}
                                         </Badge>
                                     </div>
                                     <div className="flex items-center space-x-4 text-sm text-gray-600">
                                         <span className="flex items-center">
-                                            <ApperIcon name="Mail" className="w-4 h-4 mr-1" />
-                                            {contact.email}
+<ApperIcon name="Mail" className="w-4 h-4 mr-1" />
+                                            {contact.email_c}
                                         </span>
                                         <span className="flex items-center">
-                                            <ApperIcon name="Phone" className="w-4 h-4 mr-1" />
-                                            {contact.phone}
+<ApperIcon name="Phone" className="w-4 h-4 mr-1" />
+                                            {contact.phone_c}
                                         </span>
                                         <span className="flex items-center">
-                                            <ApperIcon name="Building2" className="w-4 h-4 mr-1" />
-                                            {contact.company}
+<ApperIcon name="Building2" className="w-4 h-4 mr-1" />
+                                            {contact.company_c}
                                         </span>
                                     </div>
                                 </div>
                                 <div className="flex flex-col items-end space-y-1">
-                                    <span className="text-xs text-gray-500">
-                                        Added {format(new Date(contact.createdAt), "MMM d, yyyy")}
+<span className="text-xs text-gray-500">
+                                        Added {format(new Date(contact.CreatedOn), "MMM d, yyyy")}
                                     </span>
                                     <ApperIcon name="ChevronRight" className="w-5 h-5 text-gray-400" />
                                 </div>

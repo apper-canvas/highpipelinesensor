@@ -9,14 +9,14 @@ import { toast } from "react-toastify";
 
 const DealModal = ({ deal, onClose, onSave }) => {
     const [formData, setFormData] = useState({
-        title: "",
-        value: "",
-        stage: "qualified",
-        probability: "",
-        closeDate: "",
-        contactId: "",
-        companyId: "",
-        notes: ""
+title_c: "",
+        value_c: "",
+        stage_c: "qualified",
+        probability_c: "",
+        close_date_c: "",
+        contact_id_c: "",
+        company_id_c: "",
+        notes_c: ""
     });
     const [contacts, setContacts] = useState([]);
     const [companies, setCompanies] = useState([]);
@@ -34,15 +34,15 @@ const DealModal = ({ deal, onClose, onSave }) => {
     useEffect(() => {
         loadData();
         if (deal) {
-            setFormData({
-                title: deal.title || "",
-                value: deal.value?.toString() || "",
-                stage: deal.stage || "qualified",
-                probability: deal.probability?.toString() || "",
-                closeDate: deal.closeDate ? new Date(deal.closeDate).toISOString().split('T')[0] : "",
-                contactId: deal.contactId?.toString() || "",
-                companyId: deal.companyId?.toString() || "",
-                notes: deal.notes || ""
+setFormData({
+                title_c: deal.title_c || "",
+                value_c: deal.value_c?.toString() || "",
+                stage_c: deal.stage_c || "qualified",
+                probability_c: deal.probability_c?.toString() || "",
+                close_date_c: deal.close_date_c ? new Date(deal.close_date_c).toISOString().split('T')[0] : "",
+                contact_id_c: deal.contact_id_c?.toString() || "",
+                company_id_c: deal.company_id_c?.toString() || "",
+                notes_c: deal.notes_c || ""
             });
         }
     }, [deal]);
@@ -62,12 +62,12 @@ const DealModal = ({ deal, onClose, onSave }) => {
 
     const validate = () => {
         const newErrors = {};
-        if (!formData.title.trim()) newErrors.title = "Title is required";
-        if (!formData.value || formData.value <= 0) newErrors.value = "Value must be greater than 0";
-        if (!formData.closeDate) newErrors.closeDate = "Close date is required";
-        if (!formData.contactId) newErrors.contactId = "Contact is required";
-        if (!formData.probability || formData.probability < 0 || formData.probability > 100) {
-            newErrors.probability = "Probability must be between 0 and 100";
+if (!formData.title_c.trim()) newErrors.title_c = "Title is required";
+        if (!formData.value_c || formData.value_c <= 0) newErrors.value_c = "Value must be greater than 0";
+        if (!formData.close_date_c) newErrors.close_date_c = "Close date is required";
+        if (!formData.contact_id_c) newErrors.contact_id_c = "Contact is required";
+        if (!formData.probability_c || formData.probability_c < 0 || formData.probability_c > 100) {
+            newErrors.probability_c = "Probability must be between 0 and 100";
         }
         
         setErrors(newErrors);
@@ -81,11 +81,11 @@ const DealModal = ({ deal, onClose, onSave }) => {
         try {
             setLoading(true);
             const dealData = {
-                ...formData,
-                value: parseFloat(formData.value),
-                probability: parseInt(formData.probability),
-                contactId: formData.contactId,
-                companyId: formData.companyId || null
+...formData,
+                value_c: parseFloat(formData.value_c),
+                probability_c: parseInt(formData.probability_c),
+                contact_id_c: formData.contact_id_c,
+                company_id_c: formData.company_id_c || null
             };
 
             if (deal) {
@@ -131,10 +131,10 @@ const DealModal = ({ deal, onClose, onSave }) => {
                         <form onSubmit={handleSubmit} className="space-y-4">
                             <FormField
                                 label="Deal Title"
-                                name="title"
-                                value={formData.title}
+name="title_c"
+                                value={formData.title_c}
                                 onChange={handleChange}
-                                error={errors.title}
+                                error={errors.title_c}
                                 required
                                 placeholder="Enter deal title..."
                             />
@@ -142,11 +142,11 @@ const DealModal = ({ deal, onClose, onSave }) => {
                             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                                 <FormField
                                     label="Deal Value"
-                                    name="value"
+name="value_c"
                                     type="number"
-                                    value={formData.value}
+                                    value={formData.value_c}
                                     onChange={handleChange}
-                                    error={errors.value}
+                                    error={errors.value_c}
                                     required
                                     placeholder="0.00"
                                     min="0"
@@ -154,11 +154,11 @@ const DealModal = ({ deal, onClose, onSave }) => {
                                 />
                                 <FormField
                                     label="Probability (%)"
-                                    name="probability"
+name="probability_c"
                                     type="number"
-                                    value={formData.probability}
+                                    value={formData.probability_c}
                                     onChange={handleChange}
-                                    error={errors.probability}
+                                    error={errors.probability_c}
                                     required
                                     placeholder="0-100"
                                     min="0"
@@ -173,7 +173,7 @@ const DealModal = ({ deal, onClose, onSave }) => {
                                     </label>
                                     <select
                                         name="stage"
-                                        value={formData.stage}
+value={formData.stage_c}
                                         onChange={handleChange}
                                         className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-colors duration-200"
                                     >
@@ -185,12 +185,12 @@ const DealModal = ({ deal, onClose, onSave }) => {
                                     </select>
                                 </div>
                                 <FormField
-                                    label="Close Date"
-                                    name="closeDate"
+label="Close Date"
+                                    name="close_date_c"
                                     type="date"
-                                    value={formData.closeDate}
+                                    value={formData.close_date_c}
                                     onChange={handleChange}
-                                    error={errors.closeDate}
+                                    error={errors.close_date_c}
                                     required
                                 />
                             </div>
@@ -202,7 +202,7 @@ const DealModal = ({ deal, onClose, onSave }) => {
                                     </label>
                                     <select
                                         name="contactId"
-                                        value={formData.contactId}
+value={formData.contact_id_c}
                                         onChange={handleChange}
                                         className={`w-full px-3 py-2 border rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-colors duration-200 ${
                                             errors.contactId ? 'border-red-500' : 'border-gray-300'
@@ -210,8 +210,8 @@ const DealModal = ({ deal, onClose, onSave }) => {
                                     >
                                         <option value="">Select contact...</option>
                                         {contacts.map(contact => (
-                                            <option key={contact.Id} value={contact.Id}>
-                                                {contact.firstName} {contact.lastName}
+<option key={contact.Id} value={contact.Id}>
+                                                {contact.first_name_c} {contact.last_name_c}
                                             </option>
                                         ))}
                                     </select>
@@ -225,14 +225,14 @@ const DealModal = ({ deal, onClose, onSave }) => {
                                     </label>
                                     <select
                                         name="companyId"
-                                        value={formData.companyId}
+value={formData.company_id_c}
                                         onChange={handleChange}
                                         className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-colors duration-200"
                                     >
                                         <option value="">Select company...</option>
                                         {companies.map(company => (
-                                            <option key={company.Id} value={company.Id}>
-                                                {company.name}
+<option key={company.Id} value={company.Id}>
+                                                {company.name_c}
                                             </option>
                                         ))}
                                     </select>
@@ -244,8 +244,8 @@ const DealModal = ({ deal, onClose, onSave }) => {
                                     Notes
                                 </label>
                                 <textarea
-                                    name="notes"
-                                    value={formData.notes}
+name="notes_c"
+                                    value={formData.notes_c}
                                     onChange={handleChange}
                                     rows={3}
                                     className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-colors duration-200"

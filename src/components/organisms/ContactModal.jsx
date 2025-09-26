@@ -8,37 +8,37 @@ import { toast } from "react-toastify";
 
 const ContactModal = ({ contact, onClose, onSave }) => {
     const [formData, setFormData] = useState({
-        firstName: "",
-        lastName: "",
-        email: "",
-        phone: "",
-        company: "",
-        position: "",
-        notes: ""
+first_name_c: "",
+        last_name_c: "",
+        email_c: "",
+        phone_c: "",
+        company_c: "",
+        position_c: "",
+        notes_c: ""
     });
     const [loading, setLoading] = useState(false);
     const [errors, setErrors] = useState({});
 
     useEffect(() => {
         if (contact) {
-            setFormData({
-                firstName: contact.firstName || "",
-                lastName: contact.lastName || "",
-                email: contact.email || "",
-                phone: contact.phone || "",
-                company: contact.company || "",
-                position: contact.position || "",
-                notes: contact.notes || ""
+setFormData({
+                first_name_c: contact.first_name_c || "",
+                last_name_c: contact.last_name_c || "",
+                email_c: contact.email_c || "",
+                phone_c: contact.phone_c || "",
+                company_c: contact.company_c || "",
+                position_c: contact.position_c || "",
+                notes_c: contact.notes_c || ""
             });
         }
     }, [contact]);
 
     const validate = () => {
         const newErrors = {};
-        if (!formData.firstName.trim()) newErrors.firstName = "First name is required";
-        if (!formData.lastName.trim()) newErrors.lastName = "Last name is required";
-        if (!formData.email.trim()) newErrors.email = "Email is required";
-        if (!formData.company.trim()) newErrors.company = "Company is required";
+if (!formData.first_name_c.trim()) newErrors.first_name_c = "First name is required";
+        if (!formData.last_name_c.trim()) newErrors.last_name_c = "Last name is required";
+        if (!formData.email_c.trim()) newErrors.email_c = "Email is required";
+        if (!formData.company_c.trim()) newErrors.company_c = "Company is required";
         
         setErrors(newErrors);
         return Object.keys(newErrors).length === 0;
@@ -92,58 +92,57 @@ const ContactModal = ({ contact, onClose, onSave }) => {
 
                         <form onSubmit={handleSubmit} className="space-y-4">
                             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                                <FormField
+<FormField
                                     label="First Name"
-                                    name="firstName"
-                                    value={formData.firstName}
+                                    name="first_name_c"
+                                    value={formData.first_name_c}
                                     onChange={handleChange}
-                                    error={errors.firstName}
+                                    error={errors.first_name_c}
                                     required
                                 />
-                                <FormField
+<FormField
                                     label="Last Name"
-                                    name="lastName"
-                                    value={formData.lastName}
+                                    name="last_name_c"
+                                    value={formData.last_name_c}
                                     onChange={handleChange}
-                                    error={errors.lastName}
+                                    error={errors.last_name_c}
                                     required
                                 />
                             </div>
 
                             <FormField
-                                label="Email"
-                                name="email"
+label="Email"
+                                name="email_c"
                                 type="email"
-                                value={formData.email}
+                                value={formData.email_c}
                                 onChange={handleChange}
-                                error={errors.email}
+                                error={errors.email_c}
                                 required
                             />
 
                             <FormField
                                 label="Phone"
-                                name="phone"
+name="phone_c"
                                 type="tel"
-                                value={formData.phone}
+                                value={formData.phone_c}
                                 onChange={handleChange}
-                                error={errors.phone}
+                                error={errors.phone_c}
                             />
-
                             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                                 <FormField
-                                    label="Company"
-                                    name="company"
-                                    value={formData.company}
+label="Company"
+                                    name="company_c"
+                                    value={formData.company_c}
                                     onChange={handleChange}
-                                    error={errors.company}
+                                    error={errors.company_c}
                                     required
                                 />
-                                <FormField
+<FormField
                                     label="Position"
-                                    name="position"
-                                    value={formData.position}
+                                    name="position_c"
+                                    value={formData.position_c}
                                     onChange={handleChange}
-                                    error={errors.position}
+                                    error={errors.position_c}
                                 />
                             </div>
 
@@ -153,7 +152,7 @@ const ContactModal = ({ contact, onClose, onSave }) => {
                                 </label>
                                 <textarea
                                     name="notes"
-                                    value={formData.notes}
+value={formData.notes_c}
                                     onChange={handleChange}
                                     rows={3}
                                     className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-colors duration-200"

@@ -89,25 +89,25 @@ const ActivityFeed = ({ limit }) => {
                                 <div className="flex-shrink-0">
                                     <div className="w-8 h-8 bg-gray-100 rounded-full flex items-center justify-center">
                                         <ApperIcon 
-                                            name={getActivityIcon(activity.type)} 
+name={getActivityIcon(activity.type_c)}
                                             className="w-4 h-4 text-gray-600" 
                                         />
                                     </div>
                                 </div>
                                 <div className="flex-1 min-w-0">
                                     <div className="flex items-center space-x-2 mb-1">
-                                        <Badge variant={getActivityColor(activity.type)}>
-                                            {activity.type}
+<Badge variant={getActivityColor(activity.type_c)}>
+                                            {activity.type_c}
                                         </Badge>
                                         <span className="text-sm text-gray-500">
-                                            {format(new Date(activity.timestamp), "MMM d, yyyy 'at' h:mm a")}
+{format(new Date(activity.timestamp_c), "MMM d, yyyy 'at' h:mm a")}
                                         </span>
                                     </div>
                                     <p className="text-sm text-gray-900 mb-1">
-                                        {activity.description}
+{activity.description_c}
                                     </p>
                                     <p className="text-sm text-gray-600">
-                                        Contact: {getContactName(activity.contactId)}
+Contact: {getContactName(activity.contact_id_c)}
                                     </p>
                                 </div>
                             </div>

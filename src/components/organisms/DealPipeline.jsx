@@ -48,10 +48,10 @@ const DealPipeline = ({ onDealSelect, onAddDeal }) => {
 
     const handleStageChange = async (dealId, newStage) => {
         try {
-            const dealToUpdate = deals.find(d => d.Id === dealId);
-            await dealService.update(dealId, { ...dealToUpdate, stage: newStage });
+const dealToUpdate = deals.find(d => d.Id === dealId);
+            await dealService.update(dealId, { ...dealToUpdate, stage_c: newStage });
             setDeals(deals.map(deal => 
-                deal.Id === dealId ? { ...deal, stage: newStage } : deal
+                deal.Id === dealId ? { ...deal, stage_c: newStage } : deal
             ));
             toast.success("Deal stage updated successfully");
         } catch (err) {
@@ -65,7 +65,7 @@ const DealPipeline = ({ onDealSelect, onAddDeal }) => {
     };
 
     const getDealsByStage = (stageId) => {
-        return deals.filter(deal => deal.stage === stageId);
+return deals.filter(deal => deal.stage_c === stageId);
     };
 
     if (loading) return <Loading />;
@@ -98,7 +98,7 @@ const DealPipeline = ({ onDealSelect, onAddDeal }) => {
             <div className="grid grid-cols-1 lg:grid-cols-5 gap-6">
                 {stages.map((stage) => {
                     const stageDeals = getDealsByStage(stage.id);
-                    const stageValue = stageDeals.reduce((sum, deal) => sum + deal.value, 0);
+const stageValue = stageDeals.reduce((sum, deal) => sum + deal.value_c, 0);
 
                     return (
                         <div key={stage.id} className="space-y-4">
@@ -124,11 +124,11 @@ const DealPipeline = ({ onDealSelect, onAddDeal }) => {
                                             <div className="space-y-3">
                                                 <div className="flex items-start justify-between">
                                                     <h4 className="font-medium text-gray-900 truncate">
-                                                        {deal.title}
+{deal.title_c}
                                                     </h4>
                                                     <div className="ml-2">
                                                         <select
-                                                            value={deal.stage}
+value={deal.stage_c}
                                                             onChange={(e) => {
                                                                 e.stopPropagation();
                                                                 handleStageChange(deal.Id, e.target.value);
@@ -143,22 +143,22 @@ const DealPipeline = ({ onDealSelect, onAddDeal }) => {
                                                         </select>
                                                     </div>
                                                 </div>
-                                                <div className="text-2xl font-bold text-gray-900">
-                                                    ${deal.value.toLocaleString()}
+<div className="text-2xl font-bold text-gray-900">
+                                                    ${deal.value_c?.toLocaleString() || 0}
                                                 </div>
                                                 <div className="space-y-2">
                                                     <div className="flex items-center text-sm text-gray-600">
-                                                        <ApperIcon name="User" className="w-4 h-4 mr-2" />
-                                                        {getContactName(deal.contactId)}
+<ApperIcon name="User" className="w-4 h-4 mr-2" />
+                                                        {getContactName(deal.contact_id_c)}
                                                     </div>
                                                     <div className="flex items-center text-sm text-gray-600">
-                                                        <ApperIcon name="Calendar" className="w-4 h-4 mr-2" />
-                                                        {format(new Date(deal.closeDate), "MMM d, yyyy")}
+<ApperIcon name="Calendar" className="w-4 h-4 mr-2" />
+                                                        {format(new Date(deal.close_date_c), "MMM d, yyyy")}
                                                     </div>
                                                     <div className="flex items-center justify-between">
                                                         <div className="flex items-center text-sm text-gray-600">
-                                                            <ApperIcon name="Target" className="w-4 h-4 mr-2" />
-                                                            {deal.probability}% probability
+<ApperIcon name="Target" className="w-4 h-4 mr-2" />
+                                                            {deal.probability_c}% probability
                                                         </div>
                                                     </div>
                                                 </div>

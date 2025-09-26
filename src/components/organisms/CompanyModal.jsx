@@ -6,14 +6,14 @@ import { companyService } from "@/services/api/companyService";
 import { toast } from "react-toastify";
 
 const CompanyModal = ({ company, onClose, onSave }) => {
-    const [formData, setFormData] = useState({
-        name: "",
-        industry: "",
-        size: "Small",
-        website: "",
-        phone: "",
-        address: "",
-        notes: ""
+const [formData, setFormData] = useState({
+        name_c: "",
+        industry_c: "",
+        size_c: "Small",
+        website_c: "",
+        phone_c: "",
+        address_c: "",
+        notes_c: ""
     });
     const [loading, setLoading] = useState(false);
     const [errors, setErrors] = useState({});
@@ -21,23 +21,23 @@ const CompanyModal = ({ company, onClose, onSave }) => {
     const sizes = ["Small", "Medium", "Large", "Enterprise"];
 
     useEffect(() => {
-        if (company) {
+if (company) {
             setFormData({
-                name: company.name || "",
-                industry: company.industry || "",
-                size: company.size || "Small",
-                website: company.website || "",
-                phone: company.phone || "",
-                address: company.address || "",
-                notes: company.notes || ""
+                name_c: company.name_c || "",
+                industry_c: company.industry_c || "",
+                size_c: company.size_c || "Small",
+                website_c: company.website_c || "",
+                phone_c: company.phone_c || "",
+                address_c: company.address_c || "",
+                notes_c: company.notes_c || ""
             });
         }
     }, [company]);
 
     const validate = () => {
         const newErrors = {};
-        if (!formData.name.trim()) newErrors.name = "Company name is required";
-        if (!formData.industry.trim()) newErrors.industry = "Industry is required";
+if (!formData.name_c.trim()) newErrors.name_c = "Company name is required";
+        if (!formData.industry_c.trim()) newErrors.industry_c = "Industry is required";
         
         setErrors(newErrors);
         return Object.keys(newErrors).length === 0;
@@ -90,23 +90,23 @@ const CompanyModal = ({ company, onClose, onSave }) => {
                         </div>
 
                         <form onSubmit={handleSubmit} className="space-y-4">
-                            <FormField
+<FormField
                                 label="Company Name"
-                                name="name"
-                                value={formData.name}
+                                name="name_c"
+                                value={formData.name_c}
                                 onChange={handleChange}
-                                error={errors.name}
+                                error={errors.name_c}
                                 required
                                 placeholder="Enter company name..."
                             />
 
                             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                                <FormField
+<FormField
                                     label="Industry"
-                                    name="industry"
-                                    value={formData.industry}
+                                    name="industry_c"
+                                    value={formData.industry_c}
                                     onChange={handleChange}
-                                    error={errors.industry}
+                                    error={errors.industry_c}
                                     required
                                     placeholder="e.g. Technology, Healthcare"
                                 />
@@ -116,7 +116,7 @@ const CompanyModal = ({ company, onClose, onSave }) => {
                                     </label>
                                     <select
                                         name="size"
-                                        value={formData.size}
+value={formData.size_c}
                                         onChange={handleChange}
                                         className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-colors duration-200"
                                     >
@@ -130,41 +130,39 @@ const CompanyModal = ({ company, onClose, onSave }) => {
                             </div>
 
                             <FormField
-                                label="Website"
-                                name="website"
+label="Website"
+                                name="website_c"
                                 type="url"
-                                value={formData.website}
+                                value={formData.website_c}
                                 onChange={handleChange}
-                                error={errors.website}
+                                error={errors.website_c}
                                 placeholder="https://example.com"
                             />
 
                             <FormField
                                 label="Phone"
-                                name="phone"
+name="phone_c"
                                 type="tel"
-                                value={formData.phone}
+                                value={formData.phone_c}
                                 onChange={handleChange}
-                                error={errors.phone}
+                                error={errors.phone_c}
                                 placeholder="+1 (555) 123-4567"
                             />
-
                             <FormField
                                 label="Address"
                                 name="address"
-                                value={formData.address}
+value={formData.address_c}
                                 onChange={handleChange}
-                                error={errors.address}
+                                error={errors.address_c}
                                 placeholder="Enter company address..."
                             />
-
                             <div>
                                 <label className="block text-sm font-medium text-gray-700 mb-1">
                                     Notes
                                 </label>
                                 <textarea
                                     name="notes"
-                                    value={formData.notes}
+value={formData.notes_c}
                                     onChange={handleChange}
                                     rows={3}
                                     className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-colors duration-200"

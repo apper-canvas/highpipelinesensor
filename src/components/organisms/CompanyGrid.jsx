@@ -31,9 +31,9 @@ const CompanyGrid = ({ searchQuery, onCompanySelect, onAddCompany }) => {
     }, []);
 
     const filteredCompanies = companies.filter(company =>
-        !searchQuery || 
-        company.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        company.industry.toLowerCase().includes(searchQuery.toLowerCase())
+!searchQuery || 
+        company.name_c?.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        company.industry_c?.toLowerCase().includes(searchQuery.toLowerCase())
     );
 
     const getSizeColor = (size) => {
@@ -85,45 +85,45 @@ const CompanyGrid = ({ searchQuery, onCompanySelect, onAddCompany }) => {
                                     <div className="w-12 h-12 bg-gradient-to-br from-accent to-orange-500 rounded-lg flex items-center justify-center flex-shrink-0">
                                         <ApperIcon name="Building2" className="w-6 h-6 text-white" />
                                     </div>
-                                    <Badge variant={getSizeColor(company.size)}>
-                                        {company.size}
+<Badge variant={getSizeColor(company.size_c)}>
+                                        {company.size_c}
                                     </Badge>
                                 </div>
 
                                 <div>
-                                    <h3 className="text-lg font-semibold text-gray-900 mb-1">
-                                        {company.name}
+<h3 className="text-lg font-semibold text-gray-900 mb-1">
+                                        {company.name_c}
                                     </h3>
-                                    <p className="text-sm text-gray-600 mb-3">
-                                        {company.industry}
+<p className="text-sm text-gray-600 mb-3">
+                                        {company.industry_c}
                                     </p>
                                 </div>
 
                                 <div className="space-y-2">
-                                    {company.website && (
+{company.website_c && (
                                         <div className="flex items-center text-sm text-gray-600">
                                             <ApperIcon name="Globe" className="w-4 h-4 mr-2" />
-                                            <span className="truncate">{company.website}</span>
+                                            <span className="truncate">{company.website_c}</span>
                                         </div>
                                     )}
-                                    {company.phone && (
+{company.phone_c && (
                                         <div className="flex items-center text-sm text-gray-600">
                                             <ApperIcon name="Phone" className="w-4 h-4 mr-2" />
-                                            {company.phone}
+                                            {company.phone_c}
                                         </div>
                                     )}
-                                    {company.address && (
+{company.address_c && (
                                         <div className="flex items-center text-sm text-gray-600">
                                             <ApperIcon name="MapPin" className="w-4 h-4 mr-2" />
-                                            <span className="truncate">{company.address}</span>
+                                            <span className="truncate">{company.address_c}</span>
                                         </div>
                                     )}
                                 </div>
 
-                                {company.notes && (
+{company.notes_c && (
                                     <div className="pt-3 border-t border-gray-200">
                                         <p className="text-sm text-gray-600 line-clamp-2">
-                                            {company.notes}
+                                            {company.notes_c}
                                         </p>
                                     </div>
                                 )}

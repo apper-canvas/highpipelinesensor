@@ -25,18 +25,18 @@ const DashboardMetrics = () => {
             const totalContacts = contacts.length;
             const totalCompanies = companies.length;
             
-            const totalRevenue = deals
-                .filter(deal => deal.stage === "won")
-                .reduce((sum, deal) => sum + deal.value, 0);
+const totalRevenue = deals
+                .filter(deal => deal.stage_c === "won")
+                .reduce((sum, deal) => sum + deal.value_c, 0);
 
-            const pipelineValue = deals
-                .filter(deal => !["won", "lost"].includes(deal.stage))
-                .reduce((sum, deal) => sum + deal.value, 0);
+const pipelineValue = deals
+                .filter(deal => !["won", "lost"].includes(deal.stage_c))
+                .reduce((sum, deal) => sum + deal.value_c, 0);
 
-            const avgDealSize = totalDeals > 0 ? Math.round(totalRevenue / Math.max(deals.filter(d => d.stage === "won").length, 1)) : 0;
+const avgDealSize = totalDeals > 0 ? Math.round(totalRevenue / Math.max(deals.filter(d => d.stage_c === "won").length, 1)) : 0;
 
-            const winRate = totalDeals > 0 
-                ? Math.round((deals.filter(deal => deal.stage === "won").length / deals.filter(deal => ["won", "lost"].includes(deal.stage)).length) * 100) || 0
+const winRate = totalDeals > 0 
+                ? Math.round((deals.filter(deal => deal.stage_c === "won").length / deals.filter(deal => ["won", "lost"].includes(deal.stage_c)).length) * 100) || 0
                 : 0;
 
             setMetrics({
