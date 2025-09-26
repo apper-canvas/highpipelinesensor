@@ -7,10 +7,11 @@ import { contactService } from "@/services/api/contactService";
 import { toast } from "react-toastify";
 
 const ContactModal = ({ contact, onClose, onSave }) => {
-    const [formData, setFormData] = useState({
-first_name_c: "",
+const [formData, setFormData] = useState({
+        first_name_c: "",
         last_name_c: "",
         email_c: "",
+        mobile_c: "",
         company_c: "",
         position_c: "",
         notes_c: ""
@@ -24,6 +25,7 @@ setFormData({
                 first_name_c: contact.first_name_c || "",
                 last_name_c: contact.last_name_c || "",
                 email_c: contact.email_c || "",
+                mobile_c: contact.mobile_c || "",
                 company_c: contact.company_c || "",
                 position_c: contact.position_c || "",
                 notes_c: contact.notes_c || ""
@@ -107,7 +109,14 @@ if (!formData.first_name_c.trim()) newErrors.first_name_c = "First name is requi
                                     required
                                 />
                             </div>
-
+<FormField
+                                label="Mobile"
+                                name="mobile_c"
+                                type="tel"
+                                value={formData.mobile_c}
+                                onChange={handleChange}
+                                error={errors.mobile_c}
+                            />
                             <FormField
 label="Email"
                                 name="email_c"
